@@ -1,6 +1,6 @@
 package com.hyperskillCourse.RecipeManagmentSystem.presentationLayer;
 
-import com.hyperskillCourse.RecipeManagmentSystem.businessLayer.RecipeDTO;
+import com.hyperskillCourse.RecipeManagmentSystem.businessLayer.Recipe;
 import com.hyperskillCourse.RecipeManagmentSystem.serviceLayer.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,13 +23,13 @@ public class RecipeController {
 
 
     @PostMapping("/api/recipe")
-    public ResponseEntity<?> postRecipeToDB(@RequestBody RecipeDTO recipeDTO) {
-        recipeService.saveRecipe(recipeDTO);
+    public ResponseEntity<?> postRecipeToDB(@RequestBody Recipe recipe) {
+        recipeService.setRecipe(recipe);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/api/recipe")
-    public ResponseEntity<RecipeDTO> getRecipeFromDB() {
+    public ResponseEntity<Recipe> getRecipe() {
         return ResponseEntity.ok(recipeService.getRecipe());
     }
 }
