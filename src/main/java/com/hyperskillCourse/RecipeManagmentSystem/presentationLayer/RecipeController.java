@@ -5,13 +5,12 @@ import com.hyperskillCourse.RecipeManagmentSystem.serviceLayer.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import java.util.Map;
 
 
 @RestController
+@RequestMapping("api/recipe")
 public class RecipeController {
 
     private final RecipeService recipeService;
@@ -22,14 +21,17 @@ public class RecipeController {
     }
 
 
-    @PostMapping("/api/recipe")
-    public ResponseEntity<?> postRecipeToDB(@RequestBody Recipe recipe) {
-        recipeService.setRecipe(recipe);
-        return new ResponseEntity<>(HttpStatus.OK);
+    @PostMapping("/new")
+    public ResponseEntity<Map<String, Integer>> addRecipe(@RequestBody Recipe recipe) {
+        Integer id = recipeService.addRecipe(recipe);
+        return new ResponseEntity<>(Map.of("id", id), HttpStatus.OK);
     }
 
-    @GetMapping("/api/recipe")
-    public ResponseEntity<Recipe> getRecipe() {
-        return ResponseEntity.ok(recipeService.getRecipe());
+    @GetMapping("/{id}")
+    public ResponseEntity<Recipe> getRecipe(@PathVariable int id) {
+       Recipe recipe = recipeService.getRecipe(id);
+       return (recipe != null)
+               ? new ResponseEntity<>(recipe, HttpStatus.OK)
+               : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }
