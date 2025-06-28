@@ -1,17 +1,17 @@
 package com.hyperskillCourse.RecipeManagmentSystem.businessLayer;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import java.util.List;
 
+
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
 public class Recipe {
     private String name;
     private String description;
-    private String ingredients;
-    private String directions;
+    private List<String> ingredients;
+    private List<String> directions;
 }
